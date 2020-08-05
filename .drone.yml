@@ -6,14 +6,7 @@ platform:
   os: linux
   arch: amd64
 
-clone:
-  disable: true
-
 steps:
-- name: git
-  pull: if-not-exists
-  image: plugins/git:next
-
 - name: publish
   pull: if-not-exists
   image: plugins/docker
