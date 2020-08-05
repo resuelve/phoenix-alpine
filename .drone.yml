@@ -1,0 +1,34 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  disable: true
+
+steps:
+- name: git
+  pull: if-not-exists
+  image: plugins/git:next
+
+- name: publish
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
+    repo: resuelve/phoenix-alpine
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    tags:
+      - ${DRONE_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
+  when:
+    event:
+    - pull_requests
+    status:
+    - success
+    branch:
+    - master
