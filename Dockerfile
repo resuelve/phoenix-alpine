@@ -31,14 +31,7 @@ RUN \
       xvfb \
       dbus \
       ttf-freefont \
-      fontconfig && \
-      apk add --update-cache \
-          --repository http://dl-cdn.alpinelinux.org/alpine/v3.12/community/ \
-          --allow-untrusted \
-      wkhtmltopdf && \
-      rm -rf /var/cache/apk/* && \
-      chmod +x /usr/bin/wkhtmltopdf && \
-      apk add g++
+      fontconfig wkhtmltopdf
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
@@ -54,6 +47,7 @@ RUN /bin/bash -c "asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.
 RUN /bin/bash -c "asdf global erlang $ERLANG_VERSION"
 RUN /bin/bash -c "asdf install elixir ref:$ELIXIR_COMMIT"
 RUN /bin/bash -c "asdf global elixir ref:$ELIXIR_COMMIT"
+RUN /bin/bash -c "rm -rf ~/.asdf/installs/elixir/ref-$ELIXIR_COMMIT/lib/mix/tmp/"
 RUN /bin/bash -c "mix local.hex --force"
 RUN /bin/bash -c "mix local.rebar --force"
 RUN /bin/bash -c "mix archive.install --force hex phx_new $PHOENIX_VERSION"
