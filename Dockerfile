@@ -15,7 +15,8 @@ RUN \
       unixodbc-dev \
       zlib-dev curl gcc \
       make automake \
-      autoconf gnupg nodejs npm
+      autoconf gnupg nodejs npm \
+      inotify-tools
 RUN \
     apk add --no-cache \
       dpkg-dev \
